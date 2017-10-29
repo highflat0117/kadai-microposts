@@ -1,0 +1,28 @@
+<div class="text-center">
+  <h1>Favorites</h1>
+</div>
+<% if @favorites.any? %>
+  <ul class="media-list">
+    <% @favorites.each do |favorite| %>
+      <li class="media">
+        <div class="media-left">
+          <img class="media-object img-rounded" src="<%= gravatar_url(favorite.micropost.user, options = { size: 50 }) %>" alt="">
+        </div>
+        <div class="media-body">
+          <div>
+            <%= link_to favorite.micropost.user.name, user_path(favorite.micropost.user) %><span class="text-muted">posted at <%= favorite.created_at %></span>
+          </div>
+          <div>
+          <p><%= favorite.micropost.content %></p>
+          </div>
+        <div>
+      </li>
+      <%= render 'favorites/favorite_button', favorite_micropost: favorite.micropost %>
+    <% end %>
+  </ul>
+  <%= paginate @favorites %>
+<% else %>
+<div class="alert alert-warning text-center">
+  No Favorites Now!
+</div>
+<% end %>
